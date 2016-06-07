@@ -1,0 +1,201 @@
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 500px;
+        width: 500px;
+      }
+
+    
+</style>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-6"> 
+        <div id="map"></div>
+    </div>
+
+    <div class="col-md-6"> 
+          <h1>Right Now</h1>
+          <p><canvas id="icon1" width="128" height="128"></canvas> <%= @current_weather['temperature'] %></p>
+          <p><%= @current_weather['summary'] %> - Feels like: <%= @current_weather['apparentTemperature'] %></p>
+          
+    </div>
+    
+  </div>
+
+  
+</div>
+
+
+
+
+
+
+
+
+<h3>Forecast</h3>
+<% @forecast.each do |x| %>
+<p>******</p>
+
+
+  <% if x == @forecast[0] %>
+      <p>Today</p>
+  <% else%>
+      <p><%= Time.at(x['time']).strftime('%A') %> </p> 
+  <% end%>
+
+
+
+  <p><canvas id="icon2" width="128" height="128"></canvas><%= x['icon'] %></p>
+
+
+  <p>Min: <%= x['temperatureMin'] %> </p> 
+  
+  <div class="progress" style="width: <%= 50 + x['temperatureMax'] - x['temperatureMin'] %>px">
+    <div class="progress-bar" role="progressbar" aria-valuenow="70"
+     aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+    </div>
+  </div>
+
+<p>Max: <%= x['temperatureMax'] %> </p>
+
+<p>******</p>
+<% end %> 
+
+
+
+<h1>Historic Data </h1>
+
+<p><%= @time_now.to_i %></p>
+
+<p><%= Time.new(2013, 3, 01).to_i %></p>
+
+<p><%=  @historic_value  %></p>
+
+
+<p>Meses a Medir</p>
+<%= @historic_value  %>
+
+<br>
+
+
+<h2><%= @temporal %></h2>
+
+
+<%= link_to 'Edit', edit_location_path(@location) %> |
+<%= link_to 'Back', locations_path %>
+
+
+
+
+
+<script type="text/javascript">
+  function initMap() {
+  var myLatLng = {lat: <%= @location.latitude %>, lng: <%= @location.longitude %>};
+
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    scrollwheel: false,
+    zoom: 4
+  });
+
+  // Create a marker and set its position.
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Location'
+  });
+}
+</script>
+
+<script>
+  var skycons = new Skycons({"color": "black"});
+
+  skycons.add("icon1", Skycons.<%= @current_weather['icon'].upcase.tr("-", "_") %>);
+
+  skycons.play();
+
+
+</script>
+
+<script type="text/javascript">
+  
+  var $forecasts =  Array.new;
+
+  <% temp = [] %>
+
+  <% @forecast.each do |x| %> 
+    
+    <% temp << x['icon'] %>
+
+  <% end %>
+
+  $forecasts =  <%=raw temp %>;
+
+  // <%= j @forecast.to_json %>; 
+  console.log($forecasts);
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByfnWFF9BqHtoQVkaDksVG0z8z4q31rVg&callback=initMap"
+    async defer></script>
+
+
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+<script type="text/javascript">
+    
+var data_weather = <%= j @historic_value.to_json %>;
+
+$(function () {
+    $('#container').highcharts({
+        title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°C'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'Tokyo',
+            data: data_weather
+        }]
+    });
+});
+
+</script>
