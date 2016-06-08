@@ -30,6 +30,7 @@ gem "highcharts-rails"
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'geokit-rails'
+  gem "better_errors"
 
 
 group :development, :test do
@@ -52,6 +53,7 @@ end
 group :production do
 
   gem 'pg'
-  gem "better_errors"
+
+  gem 'rails_12factor'
 end
 
