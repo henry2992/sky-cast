@@ -9,9 +9,11 @@ class LocationsController < ApplicationController
   def index
 
     @locations = current_user.locations
-    @location = request.location
-    @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
+    @l = request.location
+    @weather = ForecastIO.forecast(@l.latitude, @l.longitude)
     @current_weather = @weather['currently']
+
+    @location = Location.new
       
   end
 

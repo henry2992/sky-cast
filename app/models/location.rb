@@ -1,5 +1,7 @@
 class Location < ActiveRecord::Base
 
+	validates :postal_code, presence: true
+	
 	belongs_to :user
 
 	geocoded_by :postal_code
