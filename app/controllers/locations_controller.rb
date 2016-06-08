@@ -8,31 +8,25 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
 
-    @locations = current_user.locations
-    @l = request.location
-    @weather = ForecastIO.forecast(@l.latitude, @l.longitude)
-    @current_weather = @weather['currently']
+    @locations = current_user.locations #Show all user locations
+    @l = request.location #Request Location by Ip
+    @weather = ForecastIO.forecast(@l.latitude, @l.longitude) #get Ip weeather data
+    @current_weather = @weather['currently'] 
 
-    @location = Location.new
-      
+    @location = Location.new   
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
-    
     @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
     @current_weather = @weather['currently']
     @forecast = @weather['daily']['data']
-    
-    
   end
 
   def historic_data
 
     @location = Location.find( params[:id])
-
-
     @historic_value = []
     @historic_years = []
 
@@ -41,8 +35,7 @@ class LocationsController < ApplicationController
     @month = @time_now.month
     
 
-    # Last Five years
-    # Year one
+    # Last Five years Data
     y1 = ForecastIO.forecast(@location.latitude, @location.longitude, time: Time.new(@year -1 , @month, @time_now.day).to_i)
     @historic_value << y1["currently"]["temperature"]
     @historic_years << @year - 1
@@ -62,7 +55,6 @@ class LocationsController < ApplicationController
     y5 = ForecastIO.forecast(@location.latitude, @location.longitude, time: Time.new(@year - 5 , @month, @time_now.day).to_i)
     @historic_value << y5["currently"]["temperature"]
     @historic_years << @year - 5
-
 
     render :layout => false
   end

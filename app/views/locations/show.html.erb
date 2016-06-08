@@ -2,25 +2,17 @@
 <%= render 'nav'%>
 
 <div class="container">
-
   <div class="row">
-
     <div class="col-md-6"> 
         <div id="map"></div>
     </div>
-
     <div class="col-md-6"> 
-
-
-
         <div>
             <h1 style="margin-bottom: 30px;">Right Now at <%= @location.postal_code %></h1>
             <p class="index-weather"><canvas id="icon" width="60" height="60"></canvas> <%= (@current_weather['temperature']).to_i %>°</p>
             <p class="index-sumary"><%= @current_weather['summary'] %> - Feels like: <%= (@current_weather['apparentTemperature']).to_i %>°</p>
         </div>
-
     </div>
-    
   </div>
 </div>
 
@@ -40,15 +32,12 @@
                 <h4 class="inline"><%= Time.at(x['time']).strftime('%A') %> </h4> 
             <% end%>
           </div>
-
           <div class="forecast-icon">
             <p class="inline"><canvas id="icon<%=i%>" width="32" height="32"></canvas></p>
           </div>
-            
           <div class="forecast-summary">  
             <p class="inline"><%= x['summary'] %></p>
           </div>
-
             <p class="inline forecast-temp"><%= x['temperatureMin'] %>°</p>  
               <div class="progress" style="width: <%= 50 + x['temperatureMax'] - x['temperatureMin'] %>px">
                 <div class="progress-bar" role="progressbar" aria-valuenow="70"
@@ -57,9 +46,7 @@
               </div>
             <p class="inline forecast-temp" ><%= x['temperatureMax'] %>° </p>
             <br>
-
             <% i += 1%>
-
           </div>
           <% end %> 
         </div>  
@@ -67,43 +54,32 @@
 </div>
 
 <div class="container">
-
   <div class="row">
-
     <div class="col-md-12">
-
       <h1 class="historic">Historic Data </h1>
-
       <div id="h" style="height: 400px;""></div>
-      
     </div>
-    
-
   </div>
-  
-
 </div>
 
   
 
 <script type="text/javascript">
   function initMap() {
-  var myLatLng = {lat: <%= @location.latitude %>, lng: <%= @location.longitude %>};
-
-  // Create a map object and specify the DOM element for display.
-  var map = new google.maps.Map(document.getElementById('map'), {
-    center: myLatLng,
-    scrollwheel: false,
-    zoom: 4
-  });
-
-  // Create a marker and set its position.
-  var marker = new google.maps.Marker({
-    map: map,
-    position: myLatLng,
-    title: 'Location'
-  });
-}
+    var myLatLng = {lat: <%= @location.latitude %>, lng: <%= @location.longitude %>};
+    // Create a map object and specify the DOM element for display.
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: myLatLng,
+      scrollwheel: false,
+      zoom: 4
+    });
+    // Create a marker and set its position.
+    var marker = new google.maps.Marker({
+      map: map,
+      position: myLatLng,
+      title: 'Location'
+    });
+  }
 </script>
 
 <script>
@@ -112,26 +88,19 @@
   skycons.play();
 </script>
 
-<script type="text/javascript">
-  
+<script type="text/javascript">  
   var $forecasts =  Array.new;
-
   var skycons = new Skycons({"color": "black"});
-
   <% i = 0 %>
   <% @forecast.each do |x| %> 
     skycons.add( "icon<%=i%>", Skycons.<%= x['icon'].upcase.tr("-", "_")  %>) ;
     skycons.play();
     <% i += 1 %>
-
   <% end %>
 </script>
 
 <script type="text/javascript">
-    
     var id = { 'id': <%= @location.id %>};
-
-  
     $(document).ready(function(){
        // we define and invoke a function
        (function(){
@@ -147,15 +116,7 @@
        })();
        console.log(id);
     });
-
-    
-
-
 </script>
-
-
-
-
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByfnWFF9BqHtoQVkaDksVG0z8z4q31rVg&callback=initMap"
     async defer></script>
