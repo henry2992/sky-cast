@@ -11,10 +11,12 @@
 
     <div class="col-md-6"> 
 
+
+
         <div>
-            <h1>Right Now</h1>
-            <p><canvas id="icon" width="128" height="128"></canvas> <%= @current_weather['temperature'] %></p>
-            <p><%= @current_weather['summary'] %> - Feels like: <%= @current_weather['apparentTemperature'] %></p>
+            <h1 style="margin-bottom: 30px;">Right Now at <%= @location.postal_code %></h1>
+            <p class="index-weather"><canvas id="icon" width="60" height="60"></canvas> <%= (@current_weather['temperature']).to_i %>°</p>
+            <p class="index-sumary"><%= @current_weather['summary'] %> - Feels like: <%= (@current_weather['apparentTemperature']).to_i %>°</p>
         </div>
 
     </div>
@@ -25,28 +27,40 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-          <h3>Forecast</h3>
+          <h3 class="forecast-title">Forecast</h3>
           <% i = 0%>
           <% @forecast.each do |x| %>
 
-          <% if x == @forecast[0] %>
-              <h4 class="inline">Today</h4>
-          <% else%>
-              <h4 class="inline"><%= Time.at(x['time']).strftime('%A') %> </h4> 
-          <% end%>
-          <p class="inline"><canvas id="icon<%=i%>" width="32" height="32"></p>
-          <p class="inline"><%= x['summary'] %></p>
-          
-          <p class="inline"><%= x['temperatureMin'] %>°</p>  
-            <div class="progress" style="width: <%= 50 + x['temperatureMax'] - x['temperatureMin'] %>px">
-              <div class="progress-bar" role="progressbar" aria-valuenow="70"
-               aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-              </div>
-            </div>
-          <p class="inline">  <%= x['temperatureMax'] %>° </p>
-          <br>
+          <div class="forecast-info">
 
-          <% i += 1%>
+          <div class="forecast-day">
+            <% if x == @forecast[0] %>
+                <h4 class="inline">Today</h4>
+            <% else%>
+                <h4 class="inline"><%= Time.at(x['time']).strftime('%A') %> </h4> 
+            <% end%>
+          </div>
+
+          <div class="forecast-icon">
+            <p class="inline"><canvas id="icon<%=i%>" width="32" height="32"></canvas></p>
+          </div>
+            
+          <div class="forecast-summary">  
+            <p class="inline"><%= x['summary'] %></p>
+          </div>
+
+            <p class="inline forecast-temp"><%= x['temperatureMin'] %>°</p>  
+              <div class="progress" style="width: <%= 50 + x['temperatureMax'] - x['temperatureMin'] %>px">
+                <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                 aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                </div>
+              </div>
+            <p class="inline forecast-temp" ><%= x['temperatureMax'] %>° </p>
+            <br>
+
+            <% i += 1%>
+
+          </div>
           <% end %> 
         </div>  
   </div>
@@ -58,7 +72,7 @@
 
     <div class="col-md-12">
 
-      <h1>Historic Data </h1>
+      <h1 class="historic">Historic Data </h1>
 
       <div id="h" style="height: 400px;""></div>
       
@@ -71,17 +85,6 @@
 </div>
 
   
-
-
-<h2><%= @temporal %></h2>
-
-
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
-
-
-
-
 
 <script type="text/javascript">
   function initMap() {
@@ -135,7 +138,7 @@
          $.ajax({
             type:'GET',
             cache: false,
-            url:'/locations/<%= @location.id %>/call',
+            url:'/locations/<%= @location.id %>/historic_data',
             data: id,
             success: function(html){
               $("#h").append(html);
@@ -149,10 +152,6 @@
 
 
 </script>
-
-
-
-
 
 
 

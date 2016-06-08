@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   
   resources :locations do
-    get 'call'
+    get 'historic_data'
   end
 
  

@@ -28,7 +28,7 @@ class LocationsController < ApplicationController
     
   end
 
-  def call
+  def historic_data
 
     @location = Location.find( params[:id])
 
