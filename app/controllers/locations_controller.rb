@@ -8,12 +8,12 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
 
-    @locations = current_user.locations
+    # @locations = current_user.locations
 
-    @location = request.location
+    # @location = request.location
 
-    @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
-    @current_weather = @weather['currently']
+    # @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
+    # @current_weather = @weather['currently']
       
   end
 

@@ -1,23 +1,9 @@
 
 <%= render 'nav'%>
-
-
 <p id="notice"><%= notice %></p>
 
 
 
-<div>
-    <h1>Right Now</h1>
-    <p><%= @city %></p>
-    <p><canvas id="icon" width="128" height="128"></canvas> <%= @current_weather['temperature'] %></p>
-    <p><%= @current_weather['summary'] %> - Feels like: <%= @current_weather['apparentTemperature'] %></p>
-</div>
-
-<div id="map"></div>
-
-
-<br>
-<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>  
 
 <table>
   <thead>
