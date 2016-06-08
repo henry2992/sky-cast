@@ -1,5 +1,5 @@
 Geocoder.configure(
-
-  :timeout => 30
-
+  
+  :http_proxy => ENV['QUOTAGUARD_URL'],
+  :timeout => 5
 )
