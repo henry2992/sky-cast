@@ -1,19 +1,5 @@
-<style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .progress {
-        display: inline-block;
-        margin: 0px !important;
-      }
 
-      .inline{
-        display: inline-block;
-      }
-</style>
+<%= render 'nav'%>
 
 <div class="container">
 
@@ -119,12 +105,8 @@
 
 <script>
   var skycons = new Skycons({"color": "black"});
-
   skycons.add("icon", Skycons.<%= @current_weather['icon'].upcase.tr("-", "_") %>);
-
   skycons.play();
-
-
 </script>
 
 <script type="text/javascript">
@@ -135,9 +117,6 @@
 
   <% i = 0 %>
   <% @forecast.each do |x| %> 
-   
-
-
     skycons.add( "icon<%=i%>", Skycons.<%= x['icon'].upcase.tr("-", "_")  %>) ;
     skycons.play();
     <% i += 1 %>

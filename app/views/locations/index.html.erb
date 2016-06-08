@@ -2,7 +2,26 @@
 <%= render 'nav'%>
 <p id="notice"><%= notice %></p>
 
+<div class="container">
 
+  <div class="row">
+
+    <div class="col-md-6"> 
+        <div id="map"></div>
+    </div>
+
+    <div class="col-md-6"> 
+
+        <div>
+            <h1>Right Now</h1>
+            <p><canvas id="icon" width="128" height="128"></canvas> <%= @current_weather['temperature'] %></p>
+            <p><%= @current_weather['summary'] %> - Feels like: <%= @current_weather['apparentTemperature'] %></p>
+        </div>
+
+    </div>
+    
+  </div>
+</div>
 
 
 <table>
@@ -32,6 +51,43 @@
 <br>
 
 <%= link_to 'New Location', new_location_path %>
+
+
+
+<script>
+  var skycons = new Skycons({"color": "black"});
+
+  skycons.add("icon", Skycons.<%= @current_weather['icon'].upcase.tr("-", "_") %>);
+
+  skycons.play();
+
+
+</script>
+
+<script type="text/javascript">
+  function initMap() {
+  var myLatLng = {lat: <%= @location.latitude %>, lng: <%= @location.longitude %>};
+
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: myLatLng,
+    scrollwheel: false,
+    zoom: 4
+  });
+
+  // Create a marker and set its position.
+  var marker = new google.maps.Marker({
+    map: map,
+    position: myLatLng,
+    title: 'Location'
+  });
+}
+</script>
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByfnWFF9BqHtoQVkaDksVG0z8z4q31rVg&callback=initMap"
+    async defer></script>
 
 
 

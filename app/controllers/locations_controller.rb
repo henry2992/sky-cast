@@ -9,11 +9,9 @@ class LocationsController < ApplicationController
   def index
 
     @locations = current_user.locations
-
     @location = request.location
-
-    # @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
-    # @current_weather = @weather['currently']
+    @weather = ForecastIO.forecast(@location.latitude, @location.longitude)
+    @current_weather = @weather['currently']
       
   end
 
@@ -133,10 +131,5 @@ class LocationsController < ApplicationController
       params.require(:location).permit(:postal_code, :latitude, :longitude)
     end
 
-    def h
-      #Historic Data
-
-    
-      
-    end
+   
 end
