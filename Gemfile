@@ -29,6 +29,8 @@ gem 'figaro'
 gem "highcharts-rails"
 
 gem 'bootstrap-sass'
+gem 'devise'
+gem 'geokit-rails'
 
 
 group :development, :test do

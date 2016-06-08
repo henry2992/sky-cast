@@ -16,3 +16,41 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+
+.main-bg{
+	background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(<%= asset_path('bg.jpg')%>);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	position: relative;
+	min-height: 100vh;
+	padding-bottom: 50px;
+	padding-top: 100px;
+	text-align: center;
+}
+
+.white{
+	color: #fff;
+}
+
+.btn-sky{
+	width: 200px;
+	color: #fff !important;
+}
+
+#error_explanation{
+	width: 200px;
+	margin: 20px auto;
+	text-align: center;
+}
+
+.field_with_errors{
+	display: block;
+	background-color: transparent;
+}
+
+#map {
+        height: 500px;
+        width: 500px;
+      }

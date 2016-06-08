@@ -1,0 +1,49 @@
+<div id="historic-data" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+<script type="text/javascript">
+    
+  var data_weather = <%= j @historic_value.to_json %>;
+  var years = <%= j @historic_years.to_json %>;
+  
+  console.log(data_weather)
+
+$(function () {
+    $('#historic-data').highcharts({
+        title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: http://forecast.io',
+            x: -20
+        },
+        xAxis: {
+            categories: years,
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°F)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '°F'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: "Postal Code: <%= @location.postal_code %>",
+            data: data_weather
+        }]
+    });
+});
+</script>

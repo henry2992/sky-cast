@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :locations
+
+
+  root 'landing#index'
+
+  
+  resources :locations do
+    get 'call'
+  end
+
+ 
+
+  # resources :courses do
+  #   resources :subchapters
+  # end
+  # get 'locations/historic'
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
