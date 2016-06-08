@@ -52,5 +52,6 @@ end
 group :production do
 
   gem 'pg'
+  gem "better_errors"
 end
 
