@@ -8,7 +8,6 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
 
-
     @locations = current_user.locations
 
     @location = request.location
